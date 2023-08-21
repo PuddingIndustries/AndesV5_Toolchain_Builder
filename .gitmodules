@@ -1,0 +1,3 @@
+[submodule "nds-gnu-toolchain"]
+	path = nds-gnu-toolchain
+	url = https://github.com/andestech/nds-gnu-toolchain.git
