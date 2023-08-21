@@ -43,5 +43,6 @@ jobs:
       - name: "Build and push image"
         uses: "docker/build-push-action@v4"
         with:
+          context: container
           push: true
           tags: "ghcr.io/${{ github.actor }}/embedded-builder-andesv5:${{ matrix.variant }}"
