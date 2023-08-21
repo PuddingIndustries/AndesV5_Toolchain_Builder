@@ -17,7 +17,7 @@ jobs:
           submodules: "true"
 
       - name: "Build dependencies"
-        run: "./install_dependencies.sh"
+        run: "sudo ./install_dependencies.sh"
 
       - name: "Prepare build script"
         run: "./prepare_script.sh ${{ matrix.variant }}"
