@@ -11,13 +11,13 @@ jobs:
 
     runs-on: "ubuntu-latest"
     steps:
-      - name: "Build dependencies"
-        run: "./install_dependencies.sh"
-
       - name: "Checkout"
         uses: "actions/checkout@v3"
         with:
           submodules: "true"
+
+      - name: "Build dependencies"
+        run: "./install_dependencies.sh"
 
       - name: "Prepare build script"
         run: "./prepare_script.sh ${{ matrix.variant }}"
