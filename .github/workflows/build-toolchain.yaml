@@ -16,7 +16,8 @@ jobs:
 
       - name: "Checkout"
         uses: "actions/checkout@v3"
-        submodules: "true"
+        with:
+          submodules: "true"
 
       - name: "Prepare build script"
         run: "./prepare_script.sh ${{ matrix.variant }}"
@@ -34,8 +35,9 @@ jobs:
       
       - name: "Login to GitHub package registry"
         uses: "docker/login-action@v2"
-        username: "${{ github.actor }}"
-        password: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          username: "${{ github.actor }}"
+          password: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: "Build and push image"
         uses: "docker/build-push-action@v4"
