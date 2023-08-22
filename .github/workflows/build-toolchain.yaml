@@ -56,7 +56,7 @@ jobs:
 
       - name: "Download toolchain artifact"
         uses: actions/download-artifact@v3
-          with:
+        with:
           name: toolchain-${{ matrix.variant }}
           path: "container"
 
