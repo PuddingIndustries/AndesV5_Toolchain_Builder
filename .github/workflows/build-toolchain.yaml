@@ -4,7 +4,7 @@ on:
       - "master"
 
 jobs:
-  build:
+  build-package:
     strategy:
       matrix:
         variant: ["v5", "v5d"]
@@ -26,10 +26,24 @@ jobs:
         working-directory: "nds-gnu-toolchain"
         run: "./build_elf_toolchain.sh"
 
-      - name: "Send toolchain to docker build directory"
+      - name: "Create toolchain archive"
         working-directory: "nds-gnu-toolchain"
-        run: "tar -cvf ../container/toolchain.tar nds32le-elf-newlib-${{ matrix.variant }}"
+        run: "tar -cJf toolchain-${{ matrix.variant }}.tar.xz nds32le-elf-newlib-${{ matrix.variant }}"
 
+      - name: "Upload toolchain artifacts"
+        uses: actions/upload-artifact@v3
+        with:
+          name: toolchain-${{ matrix.variant }}
+          path: nds-gnu-toolchain/toolchain-${{ matrix.variant }}.tar.xz
+
+  build-container:
+    strategy:
+      matrix:
+        variant: ["v5", "v5d"]
+  
+    runs-on: "ubuntu-latest"
+    needs: "build-package"
+    steps:
       - name: "Setup Docker Buildx"
         uses: "docker/setup-buildx-action@v2"
       
@@ -39,6 +53,12 @@ jobs:
           registry: ghcr.io
           username: "${{ github.repository_owner }}"
           password: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: "Download toolchain artifact"
+        uses: actions/download-artifact@v3
+          with:
+          name: toolchain-${{ matrix.variant }}
+          path: "container"
 
       - name: "Build and push image"
         uses: "docker/build-push-action@v4"
