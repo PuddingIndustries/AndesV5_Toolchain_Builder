@@ -72,6 +72,10 @@ jobs:
           name: toolchain-${{ matrix.variant }}
           path: "container"
 
+      - name: "Rename toolchain archive"
+        working-directory: "container"
+        run: "mv toolchain-${{ matrix.variant }}.tar.xz toolchain.tar.xz"
+
       - name: "Build and push image"
         uses: "docker/build-push-action@v4"
         with:
