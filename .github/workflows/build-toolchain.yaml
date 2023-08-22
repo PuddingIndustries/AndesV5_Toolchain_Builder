@@ -28,7 +28,7 @@ jobs:
 
       - name: "Send toolchain to docker build directory"
         working-directory: "nds-gnu-toolchain"
-        run: "cp -Rv nds32le-elf-newlib-${{ matrix.variant }} ../container/toolchain"
+        run: "tar -cvf ../container/toolchain.tar nds32le-elf-newlib-${{ matrix.variant }}"
 
       - name: "Setup Docker Buildx"
         uses: "docker/setup-buildx-action@v2"

@@ -7,6 +7,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 
 RUN mkdir -p /usr/local
 
-ADD toolchain/* /usr/local/
+ADD toolchain.tar /opt
+
+RUN tar -xf /opt/toolchain.tar --strip-components 1 -C /usr/local
+
+RUN rm /opt/toolchain.tar
 
 RUN pip install codechecker
