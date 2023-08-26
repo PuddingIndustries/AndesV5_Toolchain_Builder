@@ -42,6 +42,8 @@ jobs:
         variant: ["v5", "v5d"]
   
     runs-on: "ubuntu-latest"
+    permissions:
+      packages: "write"
     needs: "build-package"
     steps:
       - name: "Checkout"
@@ -56,7 +58,7 @@ jobs:
         with:
           images: "ghcr.io/${{ github.repository_owner }}/embedded-builder-andesv5"
           tags: |
-            type=sha,prefix=sha-,format=short
+            type=sha,prefix=${{ matrix.variant }}.sha-,format=short
             type=raw,value=${{ matrix.variant }}
 
       - name: "Login to GitHub package registry"
