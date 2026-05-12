@@ -31,7 +31,7 @@ jobs:
         run: "tar -cJf toolchain-${{ matrix.variant }}.tar.xz nds32le-elf-newlib-${{ matrix.variant }}"
 
       - name: "Upload toolchain artifacts"
-        uses: actions/upload-artifact@v3
+        uses: "actions/upload-artifact@v7"
         with:
           name: toolchain-${{ matrix.variant }}
           path: nds-gnu-toolchain/toolchain-${{ matrix.variant }}.tar.xz
@@ -50,11 +50,11 @@ jobs:
         uses: "actions/checkout@v6"
 
       - name: "Setup Docker buildx"
-        uses: "docker/setup-buildx-action@v2"
+        uses: "docker/setup-buildx-action@v4"
       
       - name: "Prepare Docker metadata"
         id: "docker_meta"
-        uses: "docker/metadata-action@v4"
+        uses: "docker/metadata-action@v6"
         with:
           images: "ghcr.io/${{ github.repository_owner }}/embedded-builder-andesv5"
           tags: |
@@ -69,7 +69,7 @@ jobs:
           password: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: "Download toolchain artifact"
-        uses: actions/download-artifact@v3
+        uses: "actions/download-artifact@v8"
         with:
           name: toolchain-${{ matrix.variant }}
           path: "container"
@@ -79,7 +79,7 @@ jobs:
         run: "mv toolchain-${{ matrix.variant }}.tar.xz toolchain.tar.xz"
 
       - name: "Build and push image"
-        uses: "docker/build-push-action@v4"
+        uses: "docker/build-push-action@v7"
         with:
           context: container
           push: true
