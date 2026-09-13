@@ -10,7 +10,7 @@ TARGET=
 
 case "${VARIANT}" in
 	"v5" )
-		ARCH="rv32imcxandes"
+		ARCH="rv32imc_zicsr_zifencei_xandes"
 		ABI="ilp32"
 		CPU="andes-25-series"
 		TARGET="riscv32-elf"
@@ -18,7 +18,7 @@ case "${VARIANT}" in
 		;;
 
 	"v5f" )
-		ARCH="rv32imfcxandes"
+		ARCH="rv32imfc_zicsr_zifencei_xandes"
 		ABI="ilp32f"
 		CPU="andes-25-series"
 		TARGET="riscv32-elf"
@@ -26,7 +26,7 @@ case "${VARIANT}" in
 		;;
 
 	"v5d" )
-		ARCH="rv32imfdcxandes"
+		ARCH="rv32imfdc_zicsr_zifencei_xandes"
 		ABI="ilp32d"
 		CPU="andes-25-series"
 		TARGET="riscv32-elf"
